@@ -1,15 +1,15 @@
-package com.javalab.java_lab.service;
+package com.javalab.service;
 
 import java.util.Optional;
 
+import com.javalab.dao.Department;
+import com.javalab.dao.DepartmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.javalab.java_lab.dao.Department;
-import com.javalab.java_lab.dao.DepartmentRepository;
 
 @Service
 public class DepartmentService {

@@ -1,13 +1,12 @@
-package com.javalab.java_lab.controller.validation;
+package com.javalab.controller;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.javalab.java_lab.model.ErrorCodes;
-import com.javalab.java_lab.model.ErrorMessage;
+import com.javalab.model.ErrorCodes;
+import com.javalab.model.ErrorMessage;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

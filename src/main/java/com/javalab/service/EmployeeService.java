@@ -1,15 +1,15 @@
-package com.javalab.java_lab.service;
+package com.javalab.service;
 
 import java.util.Optional;
 
+import com.javalab.dao.DepartmentRepository;
+import com.javalab.dao.Employee;
+import com.javalab.dao.EmployeeRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.javalab.java_lab.dao.DepartmentRepository;
-import com.javalab.java_lab.dao.Employee;
-import com.javalab.java_lab.dao.EmployeeRepository;
 
 
 @Service

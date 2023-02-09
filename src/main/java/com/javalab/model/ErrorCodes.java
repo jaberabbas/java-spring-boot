@@ -1,4 +1,4 @@
-package com.javalab.java_lab.model;
+package com.javalab.model;
 
 
 public enum ErrorCodes {

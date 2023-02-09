@@ -1,7 +1,7 @@
-package com.javalab.java_lab.mapper;
+package com.javalab.mapper;
 
-import com.javalab.java_lab.model.CustomException;
-import com.javalab.java_lab.model.ErrorMessage;
+import com.javalab.model.CustomException;
+import com.javalab.model.ErrorMessage;
 
 public class ErrorMessageMapper {
     

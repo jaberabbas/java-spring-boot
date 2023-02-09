@@ -1,4 +1,4 @@
-package com.javalab.java_lab.dao;
+package com.javalab.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

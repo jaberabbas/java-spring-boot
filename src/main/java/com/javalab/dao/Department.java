@@ -1,12 +1,10 @@
-package com.javalab.java_lab.dao;
+package com.javalab.dao;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Entity

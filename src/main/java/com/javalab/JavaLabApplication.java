@@ -1,4 +1,4 @@
-package com.javalab.java_lab;
+package com.javalab;
 
 import org.slf4j.Logger;
 import org.springframework.boot.SpringApplication;

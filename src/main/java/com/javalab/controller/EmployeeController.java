@@ -1,10 +1,10 @@
-package com.javalab.java_lab.controller;
+package com.javalab.controller;
 
 
 import java.net.URI;
 import java.util.Optional;
 
-import com.javalab.java_lab.dao.Employee;
+import com.javalab.dao.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.javalab.java_lab.service.EmployeeService;
+import com.javalab.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
