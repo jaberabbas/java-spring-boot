@@ -6,15 +6,16 @@ import java.util.Map;
 
 import com.javalab.java_lab.model.ErrorCodes;
 import com.javalab.java_lab.model.ErrorMessage;
-import org.springframework.http.HttpStatus;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.validation.FieldError;
 
-@ControllerAdvice
-public class EmployeeControllerAdvice {
+@Slf4j
+@org.springframework.web.bind.annotation.ControllerAdvice
+public class ControllerAdvice {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> handleValidationExceptions(MethodArgumentNotValidException e) {
@@ -27,12 +28,14 @@ public class EmployeeControllerAdvice {
         StringBuilder sbKeyValueErrors = new StringBuilder();
         errors.forEach((fieldName, errorMessage)->sbKeyValueErrors.append(fieldName + " " + errorMessage));
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), "", sbKeyValueErrors.toString());
+        log.error("MethodArgumentNotValidException was thrown: " + sbKeyValueErrors);
         return ResponseEntity.badRequest().body(errorMessage);
     }
 
     @ExceptionHandler
     public ResponseEntity<ErrorMessage> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.getErrorCode()), e.getMessage());
+        log.error("SQLIntegrityConstraintViolationException: "  + e.getMessage());
         return ResponseEntity.badRequest().body(errorMessage);
     }
 }
