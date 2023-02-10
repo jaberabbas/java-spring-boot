@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.task.model.Employee;
 import com.task.service.EmployeeService;
-import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @Slf4j
@@ -26,29 +25,45 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping()
-    public ResponseEntity<?> getAll() {
-        //TODO use pagination with web client
-        return employeeService.getAll();
+    @PostMapping()
+    public ResponseEntity<?> create(@RequestBody @Valid Employee employee) {
+        log.debug("create start: " + employee);
+        ResponseEntity responseEntity =  employeeService.create(employee);
+        log.debug("create end: " + responseEntity.getBody());
+        return  responseEntity;
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") long id) {
-        return employeeService.getById(id);
+        log.debug("get start: " + id);
+        ResponseEntity<?> responseEntity = employeeService.getById(id);
+        log.debug("get end: " + responseEntity.getBody());
+        return responseEntity;
     }
 
-    @PostMapping()
-    public ResponseEntity<?> create(@RequestBody @Valid Employee employee) {
-        return employeeService.create(employee);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") long id) {
-        return employeeService.delete(id);
+    @GetMapping()
+    public ResponseEntity<?> getAll() {
+        log.debug("getAll start");
+        //TODO use pagination with web client
+        ResponseEntity<?> responseEntity = employeeService.getAll();
+        log.debug("getAll end: " + responseEntity.getBody());
+        return responseEntity;
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody @Valid Employee employee) {
-        return employeeService.update(id, id, employee);
+        log.debug("update start: " + id + " " + employee);
+        ResponseEntity<?> responseEntity = employeeService.update(id, id, employee);
+        log.debug("update end: " + responseEntity.getBody());
+        return responseEntity;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") long id) {
+        log.debug("delete start: " + id);
+        ResponseEntity responseEntity = employeeService.delete(id);
+        log.debug("delete end: " + responseEntity.getBody());
+        return responseEntity;
     }
 }

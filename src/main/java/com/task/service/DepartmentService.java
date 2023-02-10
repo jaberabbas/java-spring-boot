@@ -1,6 +1,7 @@
 package com.task.service;
 
 import com.task.model.Department;
+import com.task.model.Employee;
 import com.task.util.WebClientConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +18,12 @@ public class DepartmentService {
 
     private static final Logger log = LoggerFactory.getLogger(DepartmentService.class);
 
-    public ResponseEntity<?> getAll() {
-        ResponseEntity<?> department = webClientConnector.getAll("http://localhost:8080/department", Department.class)
-                .block();
-        return department;
+    public ResponseEntity<?> create(Department department) {
+        HttpEntity<Department> request = new HttpEntity<>(department);
+        return webClientConnector.create("http://localhost:8080/department", request, Department.class).block();
     }
+
+
     public ResponseEntity<?> getById(long id) {
         ResponseEntity<?> responseEntity = webClientConnector.getById("http://localhost:8080/department/" + id, Object.class)
                 .block();
@@ -29,11 +31,22 @@ public class DepartmentService {
         return responseEntity;
     }
 
-    public ResponseEntity<?> create(Department department) {
-            HttpEntity<Department> request = new HttpEntity<>(department);
-            ResponseEntity<?> response = webClientConnector.create("http://localhost:8080/department", request, Department.class)
-                    .block();
-            return response;
+    public ResponseEntity<?> getAll() {
+        ResponseEntity<?> department = webClientConnector.getAll("http://localhost:8080/department", Department.class)
+                .block();
+        return department;
     }
 
+
+    public ResponseEntity<?> update(Long id, Long dptId, Department department) {
+        HttpEntity<Department> request = new HttpEntity<>(department);
+        return webClientConnector
+                .update("http://localhost:8080/department/" + id + "/" + dptId, request, Department.class)
+                .block();
+    }
+
+    public ResponseEntity<?> delete(long id) {
+        return webClientConnector.delete("http://localhost:8080/department/" + id, Object.class)
+                .block();
+    }
 }

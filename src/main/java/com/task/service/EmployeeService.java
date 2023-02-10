@@ -15,8 +15,9 @@ public class EmployeeService {
     @Autowired
     private WebClientConnector webClientConnector;
 
-    public ResponseEntity<?> getAll() {
-        return webClientConnector.getAll("http://localhost:8080/employee", Employee.class).block();
+    public ResponseEntity<?> create(Employee employee) {
+        HttpEntity<Employee> request = new HttpEntity<>(employee);
+        return webClientConnector.create("http://localhost:8080/employee", request, Object.class).block();
     }
 
     public ResponseEntity<?> getById(long id) {
@@ -26,19 +27,19 @@ public class EmployeeService {
         return responseEntity;
     }
 
-    public ResponseEntity<?> create(Employee employee) {
-        HttpEntity<Employee> request = new HttpEntity<>(employee);
-        return webClientConnector.create("http://localhost:8080/employees", request, Object.class).block();
+    public ResponseEntity<?> getAll() {
+        return webClientConnector.getAll("http://localhost:8080/employee", Employee.class).block();
     }
+
 
     public ResponseEntity<?> delete(long id) {
-        return webClientConnector.delete("http://localhost:8080/employees/" + id, Object.class).block();
+        return webClientConnector.delete("http://localhost:8080/employee/" + id, Object.class).block();
     }
 
-    public ResponseEntity<?> update(Long id, Long dptId, Employee employeeDto) {
-        HttpEntity<Employee> request = new HttpEntity<>(employeeDto);
+    public ResponseEntity<?> update(Long id, Long dptId, Employee employee) {
+        HttpEntity<Employee> request = new HttpEntity<>(employee);
         return webClientConnector
-                .update("http://localhost:8080/employees/" + id + "/" + dptId, request, Employee.class)
+                .update("http://localhost:8080/employee/" + id + "/" + dptId, request, Employee.class)
                 .block();
     }
 
