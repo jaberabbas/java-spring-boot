@@ -1,16 +1,16 @@
-package com.javalab.controller;
+package com.entity.controller;
 
 
 import java.net.URI;
 import java.util.Optional;
 
-import com.javalab.dao.Department;
+import com.entity.dao.Department;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.javalab.service.DepartmentService;
+import com.entity.service.DepartmentService;
 import jakarta.validation.Valid;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

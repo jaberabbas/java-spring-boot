@@ -1,10 +1,10 @@
-package com.javalab.controller;
+package com.entity.controller;
 
 
 import java.net.URI;
 import java.util.Optional;
 
-import com.javalab.dao.Employee;
+import com.entity.dao.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.javalab.service.EmployeeService;
+import com.entity.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 

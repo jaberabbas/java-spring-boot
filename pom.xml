@@ -8,7 +8,7 @@
 		<version>3.0.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.javalab</groupId>
+	<groupId>com.entity</groupId>
 	<artifactId>entity-ap01</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>entity-ap01</name>

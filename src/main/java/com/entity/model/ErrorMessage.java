@@ -1,4 +1,4 @@
-package com.javalab.model;
+package com.entity.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

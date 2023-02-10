@@ -1,9 +1,9 @@
-package com.javalab.service;
+package com.entity.service;
 
 import java.util.Optional;
-import com.javalab.dao.DepartmentRepository;
-import com.javalab.dao.Employee;
-import com.javalab.dao.EmployeeRepository;
+import com.entity.dao.DepartmentRepository;
+import com.entity.dao.Employee;
+import com.entity.dao.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

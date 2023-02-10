@@ -1,9 +1,9 @@
-package com.javalab.service;
+package com.entity.service;
 
 import java.util.Optional;
 
-import com.javalab.dao.Department;
-import com.javalab.dao.DepartmentRepository;
+import com.entity.dao.Department;
+import com.entity.dao.DepartmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
