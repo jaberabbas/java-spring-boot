@@ -1,11 +1,10 @@
 package com.javalab.service;
 
 import java.util.Optional;
-
 import com.javalab.dao.DepartmentRepository;
 import com.javalab.dao.Employee;
 import com.javalab.dao.EmployeeRepository;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-// @Slf4j
+@Slf4j
 public class EmployeeService {
 
     @Autowired
@@ -21,8 +20,6 @@ public class EmployeeService {
 
     @Autowired
     DepartmentRepository departmentRepository;
-
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(EmployeeService.class);
 
     public Page<Employee> getAll(Pageable pageable) {
         Page<Employee> employeePage = employeeRepository.findAll(pageable);
