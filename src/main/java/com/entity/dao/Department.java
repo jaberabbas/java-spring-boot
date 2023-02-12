@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -28,7 +29,7 @@ public class Department {
     @Column(name = "department_location")
     private String location;
 
-    @OneToMany(targetEntity = Employee.class, mappedBy = "department", cascade = CascadeType.ALL)
-    private List<Employee> employees = new ArrayList<>();
+    @OneToMany(targetEntity = Employee.class, mappedBy = "department")
+    private Set<Employee> employees;
 
 }

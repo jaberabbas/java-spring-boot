@@ -29,11 +29,7 @@ public class Employee {
     @Column(name = "job_title")
     private String jobTitle;
 
-    //@ManyToOne(targetEntity = Department.class)
-    @ManyToOne(targetEntity = Department.class, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne//(targetEntity = Department.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "department_id")
     private Department department;
-
-/*    @Column(name = "department_id", nullable = true)
-    private Long departmentId;*/
 }
