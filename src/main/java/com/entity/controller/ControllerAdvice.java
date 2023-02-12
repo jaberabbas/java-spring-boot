@@ -7,6 +7,7 @@ import java.util.Map;
 import com.entity.model.ErrorCodes;
 import com.entity.model.ErrorMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.PersistentObjectException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,6 +36,13 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorMessage> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.getErrorCode()), e.getMessage());
         log.error("SQLIntegrityConstraintViolationException: "  + e.getMessage());
+        return ResponseEntity.badRequest().body(errorMessage);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorMessage> handlePersistentObjectException(PersistentObjectException e) {
+        ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.hashCode()), e.getMessage());
+        log.error("PersistentObjectException: "  + e.getMessage());
         return ResponseEntity.badRequest().body(errorMessage);
     }
 }
