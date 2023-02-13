@@ -29,7 +29,7 @@ public class Employee {
     @Column(name = "job_title")
     private String jobTitle;
 
-    @ManyToOne//(targetEntity = Department.class, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne
     @JoinColumn(name = "department_id")
     private Department department;
 }
