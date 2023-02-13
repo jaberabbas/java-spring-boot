@@ -50,6 +50,7 @@ public class WebClientConnector {
                 .uri(url)
                 .bodyValue(request.getBody())
                 .retrieve()
+                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
                 .toEntity(responseType);
                 // .bodyToMono(responseType);
     }
@@ -60,6 +61,7 @@ public class WebClientConnector {
                 .uri(url)
                 .bodyValue(request.getBody())
                 .retrieve()
+                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
                 .toEntity(responseType);
                 // .bodyToMono(responseType);
     }
@@ -69,6 +71,7 @@ public class WebClientConnector {
                 .delete()
                 .uri(url)
                 .retrieve()
+                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
                 .toEntity(responseType);
                 // .bodyToMono(responseType);
     }
