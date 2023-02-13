@@ -9,7 +9,9 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
 /**
  * Aspect for logging execution of service and repository Spring components.
@@ -78,8 +80,7 @@ public class LoggingAspect {
 
     //AOP expression for which methods shall be intercepted
     @Around("execution(* com.entity.service..*(..)))")
-    public Object profileAllMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable
-    {
+    public Object profileAllMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
 
         //Get intercepted method details
@@ -94,7 +95,8 @@ public class LoggingAspect {
         stopWatch.stop();
 
         //Log method execution time
-        LOGGER.info("Execution time of " + className + "." + methodName + " :: " + stopWatch.getTotalTimeMillis() + " ms");
+        if(stopWatch.getTotalTimeMillis() >= 10)
+            log.error("Execution time of " + className + "." + methodName + " :: " + stopWatch.getTotalTimeMillis() + " ms");
 
         return result;
     }
