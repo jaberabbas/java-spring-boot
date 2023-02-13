@@ -2,14 +2,13 @@ package com.entity.aspect;
 
 import java.util.Arrays;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,11 +16,10 @@ import org.springframework.stereotype.Component;
  *
  * @author Ramesh Fadatare
  */
+@Slf4j
 @Aspect
 @Component
 public class LoggingAspect {
-
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Pointcut that matches all repositories, services and Web REST endpoints.
@@ -49,7 +47,7 @@ public class LoggingAspect {
      */
     @AfterThrowing(pointcut = "applicationPackagePointcut() && springBeanPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        log.error("Exception in {}.{}() with cause = {}", joinPoint.getSignature().getDeclaringTypeName(),
+        log.error("Exception in {}.{}() with cause: ", joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(), e.getCause() != null ? e.getCause() : "NULL");
     }
 
@@ -76,5 +74,28 @@ public class LoggingAspect {
                     joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
             throw e;
         }
+    }
+
+    //AOP expression for which methods shall be intercepted
+    @Around("execution(* com.entity.service..*(..)))")
+    public Object profileAllMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable
+    {
+        MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
+
+        //Get intercepted method details
+        String className = methodSignature.getDeclaringType().getSimpleName();
+        String methodName = methodSignature.getName();
+
+        final StopWatch stopWatch = new StopWatch();
+
+        //Measure method execution time
+        stopWatch.start();
+        Object result = proceedingJoinPoint.proceed();
+        stopWatch.stop();
+
+        //Log method execution time
+        LOGGER.info("Execution time of " + className + "." + methodName + " :: " + stopWatch.getTotalTimeMillis() + " ms");
+
+        return result;
     }
 }

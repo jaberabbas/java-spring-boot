@@ -13,7 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.validation.FieldError;
 
-@Slf4j
+
 @org.springframework.web.bind.annotation.ControllerAdvice
 public class ControllerAdvice {
 
@@ -28,21 +28,18 @@ public class ControllerAdvice {
         StringBuilder sbKeyValueErrors = new StringBuilder();
         errors.forEach((fieldName, errorMessage)->sbKeyValueErrors.append(fieldName + " " + errorMessage));
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), "", sbKeyValueErrors.toString());
-        log.error("MethodArgumentNotValidException was thrown: " + sbKeyValueErrors);
         return ResponseEntity.badRequest().body(errorMessage);
     }
 
     @ExceptionHandler
     public ResponseEntity<ErrorMessage> handleSQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.getErrorCode()), e.getMessage());
-        log.error("SQLIntegrityConstraintViolationException: "  + e.getMessage());
         return ResponseEntity.badRequest().body(errorMessage);
     }
 
     @ExceptionHandler
     public ResponseEntity<ErrorMessage> handlePersistentObjectException(PersistentObjectException e) {
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.hashCode()), e.getMessage());
-        log.error("PersistentObjectException: "  + e.getMessage());
         return ResponseEntity.badRequest().body(errorMessage);
     }
 }
