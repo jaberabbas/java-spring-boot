@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.entity.model.ErrorCodes;
 import com.entity.model.ErrorMessage;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.PersistentObjectException;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,12 @@ public class ControllerAdvice {
 
     @ExceptionHandler
     public ResponseEntity<ErrorMessage> handlePersistentObjectException(PersistentObjectException e) {
+        ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.hashCode()), e.getMessage());
+        return ResponseEntity.badRequest().body(errorMessage);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorMessage> handleEntityNotFoundException(EntityNotFoundException e) {
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.hashCode()), e.getMessage());
         return ResponseEntity.badRequest().body(errorMessage);
     }
