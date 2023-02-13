@@ -16,11 +16,24 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConnector {
 
     private final WebClient webClient;
+    private static final String BASE_URL = "http://localhost:8080";
 
     public WebClientConnector() {
         this.webClient = WebClient.builder()
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .baseUrl(BASE_URL)
                 .build();
+    }
+
+    public <T> Mono<ResponseEntity<T>> create(String url, HttpEntity<?> request, Class<T> responseType) {
+        return webClient
+                .post()
+                .uri(url)
+                .bodyValue(request.getBody())
+                .retrieve()
+                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
+                .toEntity(responseType);
+        // .bodyToMono(responseType);
     }
 
     // So far only added .onStatus on this method to show it to you
@@ -44,16 +57,6 @@ public class WebClientConnector {
                 .toEntityList(responseType);
     }
 
-    public <T> Mono<ResponseEntity<T>> create(String url, HttpEntity<?> request, Class<T> responseType) {
-        return webClient
-                .post()
-                .uri(url)
-                .bodyValue(request.getBody())
-                .retrieve()
-                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
-                .toEntity(responseType);
-                // .bodyToMono(responseType);
-    }
 
     public <T> Mono<ResponseEntity<T>> update(String url, HttpEntity<?> request, Class<T> responseType) {
         return webClient
