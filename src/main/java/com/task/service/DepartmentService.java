@@ -20,28 +20,22 @@ public class DepartmentService {
 
     public ResponseEntity<?> create(Department department) {
         HttpEntity<Department> request = new HttpEntity<>(department);
-        return webClientConnector.create("http://localhost:8080/department", request, Department.class).block();
+        return webClientConnector.create("http://localhost:8080/department", request, Object.class).block();
     }
 
 
     public ResponseEntity<?> getById(long id) {
-        ResponseEntity<?> responseEntity = webClientConnector.getById("http://localhost:8080/department/" + id, Object.class)
-                .block();
-        return responseEntity;
+        return webClientConnector.getById("http://localhost:8080/department/" + id, Object.class).block();
     }
 
     public ResponseEntity<?> getAll() {
-        ResponseEntity<?> department = webClientConnector.getAll("http://localhost:8080/department", Department.class)
-                .block();
-        return department;
+        return webClientConnector.getAll("http://localhost:8080/department", Object.class).block();
     }
 
 
     public ResponseEntity<?> update(Long id, Department department) {
         HttpEntity<Department> request = new HttpEntity<>(department);
-        return webClientConnector
-                .update("http://localhost:8080/department/" + id, request, Department.class)
-                .block();
+        return webClientConnector.update("http://localhost:8080/department/" + id, request, Object.class).block();
     }
 
     public ResponseEntity<?> delete(long id) {

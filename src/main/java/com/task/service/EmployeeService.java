@@ -20,25 +20,20 @@ public class EmployeeService {
     }
 
     public ResponseEntity<?> getById(long id) {
-        ResponseEntity<?> responseEntity = webClientConnector.getById("http://localhost:8080/employee/" + id, Object.class)
-                .block();
-        return responseEntity;
+        return webClientConnector.getById("http://localhost:8080/employee/" + id, Object.class).block();
     }
 
     public ResponseEntity<?> getAll() {
-        return webClientConnector.getAll("http://localhost:8080/employee", Employee.class).block();
+        return webClientConnector.getAll("http://localhost:8080/employee", Object.class).block();
     }
 
+
+    public ResponseEntity<?> update(Long id, Employee employee) {
+        HttpEntity<Employee> request = new HttpEntity<>(employee);
+        return webClientConnector.update("http://localhost:8080/employee/" + id, request, Object.class).block();
+    }
 
     public ResponseEntity<?> delete(long id) {
         return webClientConnector.delete("http://localhost:8080/employee/" + id, Object.class).block();
     }
-
-    public ResponseEntity<?> update(Long id, Employee employee) {
-        HttpEntity<Employee> request = new HttpEntity<>(employee);
-        return webClientConnector
-                .update("http://localhost:8080/employee/" + id, request, Employee.class)
-                .block();
-    }
-
 }
