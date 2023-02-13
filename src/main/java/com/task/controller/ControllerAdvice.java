@@ -6,7 +6,6 @@ import com.task.model.ErrorMessage;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.reactive.function.client.WebClientRequestException;
 import org.springframework.validation.FieldError;
 
-@Slf4j
 @org.springframework.web.bind.annotation.ControllerAdvice
 public class ControllerAdvice {
 
@@ -30,7 +28,6 @@ public class ControllerAdvice {
         StringBuilder sbErros = new StringBuilder();
         errors.forEach((fieldName, errorMessage) -> sbErros.append(fieldName + " : " + errorMessage));
         ErrorMessage message = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), "", sbErros.toString());
-        log.error("MethodArgumentNotValidException: " + sbErros.toString());
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
@@ -38,7 +35,6 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorMessage> handleWebClientRequestException(WebClientRequestException e) {
         String details = "request method " + e.getMethod() + " failed: " + e.getMessage();
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.TEC001.getCode(), ErrorCodes.TEC001.getDesc(), "", details);
-        log.error("WebClientRequestException: " + details);
         return ResponseEntity.internalServerError().body(errorMessage);
     }
 
