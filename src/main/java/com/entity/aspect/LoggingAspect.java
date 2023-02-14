@@ -16,7 +16,6 @@ import org.springframework.util.StopWatch;
 /**
  * Aspect for logging execution of service and repository Spring components.
  *
- * @author Ramesh Fadatare
  */
 @Slf4j
 @Aspect
