@@ -24,59 +24,47 @@ public class WebClientConnector {
                 .baseUrl(BASE_URL)
                 .build();
     }
-
-    public <T> Mono<ResponseEntity<T>> create(String url, HttpEntity<?> request, Class<T> responseType) {
+    public ResponseEntity<Object> create(String url, HttpEntity<?> request)  {
         return webClient
                 .post()
                 .uri(url)
                 .bodyValue(request.getBody())
                 .retrieve()
-                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
-                .toEntity(responseType);
-        // .bodyToMono(responseType);
+                .toEntity(Object.class)
+                .block();
     }
-
-    // So far only added .onStatus on this method to show it to you
-    // if ok, should be added to all methods
-    public <T> Mono<ResponseEntity<T>> getById(String url, Class<T> responseType) {
+    public ResponseEntity<Object> getById(String url) {
         return webClient
                 .get()
                 .uri(url)
                 .retrieve()
-                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
-                .toEntity(responseType);
+                .toEntity(Object.class).block();
     }
     
-    public <T> Mono<ResponseEntity<List<T>>> getAll(String url, Class<T> responseType) {
+    public ResponseEntity<List<Object>> getAll(String url) {
         return webClient
                 .get()
                 .uri(url)
-                .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
-                .toEntityList(responseType);
+                .toEntityList(Object.class).block();
     }
 
 
-    public <T> Mono<ResponseEntity<T>> update(String url, HttpEntity<?> request, Class<T> responseType) {
+    public ResponseEntity<Object> update(String url, HttpEntity<?> request) {
         return webClient
                 .put()
                 .uri(url)
                 .bodyValue(request.getBody())
                 .retrieve()
-                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
-                .toEntity(responseType);
-                // .bodyToMono(responseType);
+                .toEntity(Object.class).block();
     }
 
-    public <T> Mono<ResponseEntity<T>> delete(String url, Class<T> responseType) {
+    public ResponseEntity<Object> delete(String url) {
         return webClient
                 .delete()
                 .uri(url)
                 .retrieve()
-                .onStatus(status -> status.is4xxClientError() || status.is5xxServerError(), clientResponse -> Mono.empty())
-                .toEntity(responseType);
-                // .bodyToMono(responseType);
+                .toEntity(Object.class).block();
     }
 
 }

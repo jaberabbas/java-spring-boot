@@ -16,24 +16,24 @@ public class EmployeeService {
 
     public ResponseEntity<?> create(Employee employee) {
         HttpEntity<Employee> request = new HttpEntity<>(employee);
-        return webClientConnector.create("/employee", request, Object.class).block();
+        return webClientConnector.create("/employee", request);
     }
 
     public ResponseEntity<?> getById(long id) {
-        return webClientConnector.getById("/employee/" + id, Object.class).block();
+        return webClientConnector.getById("/employee/" + id);
     }
 
     public ResponseEntity<?> getAll() {
-        return webClientConnector.getAll("/employee", Object.class).block();
+        return webClientConnector.getAll("/employee");
     }
 
 
     public ResponseEntity<?> update(Long id, Employee employee) {
         HttpEntity<Employee> request = new HttpEntity<>(employee);
-        return webClientConnector.update("/employee/" + id, request, Object.class).block();
+        return webClientConnector.update("/employee/" + id, request);
     }
 
     public ResponseEntity<?> delete(long id) {
-        return webClientConnector.delete("/employee/" + id, Object.class).block();
+        return webClientConnector.delete("/employee/" + id);
     }
 }
