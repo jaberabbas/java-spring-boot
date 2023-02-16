@@ -45,26 +45,26 @@ public class DepartmentControllerTest {
         given(departmentService.create(any(Department.class))).willReturn(department);
         mockMvc.perform(post("/department").contentType(MediaType.APPLICATION_JSON).content(asJsonString(department)))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("location", "http://localhost/department/."));
+                .andExpect(header().string("location", "http://localhost/department/"));
 
         verify(departmentService).create(any(Department.class));
     }
 
     @Test
-    public void testGet() throws Exception{
+    public void testGet() throws Exception {
         Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
         given(departmentService.findById(anyLong())).willReturn(Optional.of(department));
         mockMvc.perform(get("/department/{id}", "2"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("name").value( "dept"))
+                .andExpect(jsonPath("name").value("dept"))
                 .andExpect(jsonPath("description").value("dept mock MVC test"))
                 .andExpect(jsonPath("location").value("London"));
         verify(departmentService).findById(anyLong());
     }
 
     @Test
-    public void testGetAll() throws Exception{
+    public void testGetAll() throws Exception {
         Department department1 = new Department(Long.getLong("1"), "dept1", "dept mock MVC test", "London", null);
         Department department2 = new Department(Long.getLong("2"), "dept2", "dept mock MVC test", "Paris", null);
         List<Department> departmentList = new ArrayList<>();
@@ -75,7 +75,7 @@ public class DepartmentControllerTest {
         mockMvc.perform(get("/department"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content",hasSize(2)))
+                .andExpect(jsonPath("$.content", hasSize(2)))
                 .andExpect(jsonPath("$.content.[0].name").value("dept1"))
                 .andExpect(jsonPath("$.content.[0].location").value("London"))
                 .andExpect(jsonPath("$.content.[1].name").value("dept2"))
@@ -86,6 +86,46 @@ public class DepartmentControllerTest {
 
         verify(departmentService).findAll(any(Pageable.class));
     }
+
+    @Test
+    public void testUpdate() throws Exception {
+        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        given(departmentService.findById(anyLong())).willReturn(Optional.of(department));
+        given(departmentService.create(any(Department.class))).willReturn(department);
+        mockMvc.perform(get("/department/{id}", "1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("name").value("dept"))
+                .andExpect(jsonPath("description").value("dept mock MVC test"))
+                .andExpect(jsonPath("location").value("London"));
+
+        department.setLocation("Berlin");
+        departmentService.create(department);
+        mockMvc.perform(get("/department/{id}", "1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("name").value("dept"))
+                .andExpect(jsonPath("description").value("dept mock MVC test"))
+                .andExpect(jsonPath("location").value("Berlin"));
+
+        verify(departmentService).create(any(Department.class));
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        given(departmentService.findById(anyLong())).willReturn(Optional.of(department));
+        mockMvc.perform(get("/department/{id}", "1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("name").value("dept"))
+                .andExpect(jsonPath("description").value("dept mock MVC test"))
+                .andExpect(jsonPath("location").value("London"));
+
+        departmentService.delete(department);
+        verify(departmentService).findById(anyLong());
+    }
+
     protected static String asJsonString(final Object obj) throws JsonProcessingException {
 
         final ObjectMapper mapper = new ObjectMapper();
