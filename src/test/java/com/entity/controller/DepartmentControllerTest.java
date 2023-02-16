@@ -4,17 +4,23 @@ import com.entity.dao.Department;
 import com.entity.service.DepartmentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.swagger.v3.oas.annotations.headers.Header;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
@@ -53,9 +59,32 @@ public class DepartmentControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("name").value( "dept"))
                 .andExpect(jsonPath("description").value("dept mock MVC test"))
-                .andExpect(jsonPath("location").value("London"))
-        ;
+                .andExpect(jsonPath("location").value("London"));
         verify(departmentService).findById(anyLong());
+    }
+
+    @Test
+    public void testGetAll() throws Exception{
+        Department department1 = new Department(Long.getLong("1"), "dept1", "dept mock MVC test", "London", null);
+        Department department2 = new Department(Long.getLong("2"), "dept2", "dept mock MVC test", "Paris", null);
+        List<Department> departmentList = new ArrayList<>();
+        departmentList.add(department1);
+        departmentList.add(department2);
+        Page<Department> departmentPage = new PageImpl<>(departmentList);
+        given(departmentService.findAll(any(Pageable.class))).willReturn(departmentPage);
+        mockMvc.perform(get("/department"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content",hasSize(2)))
+                .andExpect(jsonPath("$.content.[0].name").value("dept1"))
+                .andExpect(jsonPath("$.content.[0].location").value("London"))
+                .andExpect(jsonPath("$.content.[1].name").value("dept2"))
+                .andExpect(jsonPath("$.content.[1].location").value("Paris"))
+
+
+        ;
+
+        verify(departmentService).findAll(any(Pageable.class));
     }
     protected static String asJsonString(final Object obj) throws JsonProcessingException {
 
