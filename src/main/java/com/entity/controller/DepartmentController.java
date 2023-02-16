@@ -34,7 +34,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") long id) {
+    public ResponseEntity<?> get(@PathVariable("id") long id) {
         Optional<Department> optionalDepartment = departmentService.findById(id);
         if (!optionalDepartment.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();

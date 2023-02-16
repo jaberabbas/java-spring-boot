@@ -19,10 +19,6 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
-    public Page<Department> findAll(Pageable pageable) {
-        Page<Department> departmentPage = departmentRepository.findAll(pageable);
-        return departmentPage;
-    }
 
     public Department create(Department department)  {
            Department savedDepartment =  departmentRepository.save(department);
@@ -33,6 +29,12 @@ public class DepartmentService {
         Optional<Department> optionalDepartment = departmentRepository.findById(id);
         return optionalDepartment;
     }
+
+    public Page<Department> findAll(Pageable pageable) {
+        Page<Department> departmentPage = departmentRepository.findAll(pageable);
+        return departmentPage;
+    }
+
     public void delete(Department department) {
         departmentRepository.delete(department);
     }

@@ -41,7 +41,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") long id) {
+    public ResponseEntity<?> get(@PathVariable("id") long id) {
         Optional<Employee> optionalEmployee = employeeService.findById(id);
         if (!optionalEmployee.isPresent()) {
             return ResponseEntity.unprocessableEntity().build();

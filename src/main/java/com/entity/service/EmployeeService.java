@@ -21,21 +21,18 @@ public class EmployeeService {
     @Autowired
     DepartmentRepository departmentRepository;
 
-    public Page<Employee> getAll(Pageable pageable) {
-        Page<Employee> employeePage = employeeRepository.findAll(pageable);
-        return employeePage;
-    }
-
-    public Optional<Employee> findById(long id) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        return optionalEmployee;
-    }
-
     public Employee create(Employee employee) {
         employeeRepository.save(employee);
         return employee;
     }
-
+    public Optional<Employee> findById(long id) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        return optionalEmployee;
+    }
+    public Page<Employee> getAll(Pageable pageable) {
+        Page<Employee> employeePage = employeeRepository.findAll(pageable);
+        return employeePage;
+    }
     public void delete(Employee employee) {
         employeeRepository.delete(employee);
     }
