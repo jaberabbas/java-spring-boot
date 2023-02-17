@@ -60,10 +60,9 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("firstName").value("Jon"))
                 .andExpect(jsonPath("lastName").value("Smith"))
                 .andExpect(jsonPath("age").value("40"))
-                .andExpect(jsonPath("jobTitle").value("Developer"));
-                //.andExpect(jsonPath("department.id").value("1"))
-                //.andExpect(jsonPath("department.name").value("dept"));
-
+                .andExpect(jsonPath("jobTitle").value("Developer"))
+                .andExpect(jsonPath("$.department.name").value("dept"))
+                .andExpect(jsonPath("$.department.location").value("London"));
 
 
         verify(employeeService).findById(anyLong());
