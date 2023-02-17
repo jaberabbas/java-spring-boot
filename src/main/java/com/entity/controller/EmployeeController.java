@@ -5,7 +5,6 @@ import java.net.URI;
 import java.util.Optional;
 
 import com.entity.dao.Employee;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
