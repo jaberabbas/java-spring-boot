@@ -38,7 +38,6 @@ public class EmployeeController {
 
     @GetMapping()
     public ResponseEntity<?> getAll() {
-        //TODO use pagination with web client
         ResponseEntity<?> responseEntity = employeeService.getAll();
         return responseEntity;
     }
