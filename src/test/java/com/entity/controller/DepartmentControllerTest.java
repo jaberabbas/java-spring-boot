@@ -1,6 +1,6 @@
 package com.entity.controller;
 
-import com.entity.dao.Department;
+import com.entity.model.Department;
 import com.entity.service.DepartmentService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -41,7 +41,10 @@ public class DepartmentControllerTest {
     public void testCreate() throws JsonProcessingException, Exception {
         Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
         given(departmentService.create(any(Department.class))).willReturn(department);
-        mockMvc.perform(post("/department").contentType(MediaType.APPLICATION_JSON).content(asJsonString(department))).andExpect(status().isCreated()).andExpect(header().string("location", "http://localhost/department/"));
+        mockMvc.perform(post("/department").contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(department)))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("location", "http://localhost/department/"));
 
         verify(departmentService).create(any(Department.class));
     }
@@ -61,7 +64,6 @@ public class DepartmentControllerTest {
 
     @Test
     public void testGetNotFound() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
         given(departmentService.findById(anyLong())).willReturn(Optional.empty());
         mockMvc.perform(get("/department/{id}", "2"))
                 .andExpect(status().isUnprocessableEntity());

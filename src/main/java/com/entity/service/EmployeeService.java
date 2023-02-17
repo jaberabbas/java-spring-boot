@@ -2,7 +2,7 @@ package com.entity.service;
 
 import java.util.Optional;
 import com.entity.dao.DepartmentRepository;
-import com.entity.dao.Employee;
+import com.entity.model.Employee;
 import com.entity.dao.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class EmployeeService {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
         return optionalEmployee;
     }
-    public Page<Employee> getAll(Pageable pageable) {
+    public Page<Employee> findAll(Pageable pageable) {
         Page<Employee> employeePage = employeeRepository.findAll(pageable);
         return employeePage;
     }

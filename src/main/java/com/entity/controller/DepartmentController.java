@@ -4,7 +4,7 @@ package com.entity.controller;
 import java.net.URI;
 import java.util.Optional;
 
-import com.entity.dao.Department;
+import com.entity.model.Department;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

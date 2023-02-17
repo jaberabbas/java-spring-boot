@@ -2,7 +2,7 @@ package com.entity.service;
 
 import java.util.Optional;
 
-import com.entity.dao.Department;
+import com.entity.model.Department;
 import com.entity.dao.DepartmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

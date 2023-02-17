@@ -4,7 +4,7 @@ package com.entity.controller;
 import java.net.URI;
 import java.util.Optional;
 
-import com.entity.dao.Employee;
+import com.entity.model.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +35,7 @@ public class EmployeeController {
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody @Valid Employee employee) {
         Employee savedEmployee = employeeService.create(employee);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedEmployee).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedEmployee.getId()).toUri();
         return ResponseEntity.created(location).body(savedEmployee);
     }
 
@@ -51,7 +51,7 @@ public class EmployeeController {
 
     @GetMapping()
     public ResponseEntity<Page<Employee>> getAll(Pageable pageable) {
-        Page<Employee> employeePage = employeeService.getAll(pageable);
+        Page<Employee> employeePage = employeeService.findAll(pageable);
         return ResponseEntity.ok().body(employeePage);
     }
 

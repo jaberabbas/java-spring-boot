@@ -1,6 +1,6 @@
 package com.entity.controller;
 
-import com.entity.dao.Department;
+import com.entity.model.Department;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
