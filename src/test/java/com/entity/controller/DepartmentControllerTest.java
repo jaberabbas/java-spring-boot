@@ -39,19 +39,19 @@ public class DepartmentControllerTest {
 
     @Test
     public void testCreate() throws JsonProcessingException, Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         given(departmentService.create(any(Department.class))).willReturn(department);
         mockMvc.perform(post("/department").contentType(MediaType.APPLICATION_JSON)
                 .content(asJsonString(department)))
                 .andExpect(status().isCreated())
-                .andExpect(header().string("location", "http://localhost/department/"));
+                .andExpect(header().string("location", "http://localhost/department/1"));
 
         verify(departmentService).create(any(Department.class));
     }
 
     @Test
     public void testGet() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         given(departmentService.findById(anyLong())).willReturn(Optional.of(department));
         mockMvc.perform(get("/department/{id}", "2"))
                 .andExpect(status().isOk())
@@ -73,8 +73,8 @@ public class DepartmentControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        Department department1 = new Department(Long.getLong("1"), "dept1", "dept mock MVC test", "London", null);
-        Department department2 = new Department(Long.getLong("2"), "dept2", "dept mock MVC test", "Paris", null);
+        Department department1 = new Department(Long.valueOf(1), "dept1", "dept mock MVC test", "London", null);
+        Department department2 = new Department(Long.valueOf(2), "dept2", "dept mock MVC test", "Paris", null);
         List<Department> departmentList = new ArrayList<>();
         departmentList.add(department1);
         departmentList.add(department2);
@@ -93,7 +93,7 @@ public class DepartmentControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         given(departmentService.findById(anyLong())).willReturn(Optional.of(department));
         given(departmentService.create(any(Department.class))).willReturn(department);
         mockMvc.perform(put("/department/{id}", "1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(department))).andExpect(status().isNoContent());
@@ -114,7 +114,7 @@ public class DepartmentControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         given(departmentService.findById(anyLong())).willReturn(Optional.of(department));
         mockMvc.perform(delete("/department/{id}", "1"))
                 .andExpect(status().isNoContent());
@@ -125,7 +125,7 @@ public class DepartmentControllerTest {
 
     @Test
     public void testDeleteNotFound() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         given(departmentService.findById(anyLong())).willReturn(Optional.empty());
         mockMvc.perform(delete("/department/{id}", "1"))
                 .andExpect(status().isUnprocessableEntity());

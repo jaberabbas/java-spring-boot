@@ -40,7 +40,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void testCreate() throws JsonProcessingException, Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         Employee employee = new Employee(Long.getLong("1"), "Jon", "Smith", Double.valueOf("3000"), 40, "developer", department);
         given(employeeService.create(any(Employee.class))).willReturn(employee);
         mockMvc.perform(post("/employee").contentType(MediaType.APPLICATION_JSON).content(asJsonString(employee)))
@@ -51,8 +51,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
-        Employee employee = new Employee(Long.getLong("1"), "Jon", "Smith", Double.valueOf("3000"), 40, "Developer", department);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
+        Employee employee = new Employee(Long.valueOf(1), "Jon", "Smith", Double.valueOf("3000"), 40, "Developer", department);
         given(employeeService.findById(anyLong())).willReturn(Optional.of(employee));
         mockMvc.perform(get("/employee/{id}", "2"))
                 .andExpect(status().isOk())
@@ -70,7 +70,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void testGetNotFound() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         given(employeeService.findById(anyLong())).willReturn(Optional.empty());
         mockMvc.perform(get("/employee/{id}", "2"))
                 .andExpect(status().isUnprocessableEntity());
@@ -80,8 +80,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        Department department1 = new Department(Long.getLong("1"), "dept1", "dept mock MVC test", "London", null);
-        Department department2 = new Department(Long.getLong("2"), "dept2", "dept mock MVC test", "Paris", null);
+        Department department1 = new Department(Long.valueOf(1), "dept1", "dept mock MVC test", "London", null);
+        Department department2 = new Department(Long.valueOf(2), "dept2", "dept mock MVC test", "Paris", null);
         Employee employee1 = new Employee(Long.getLong("1"), "Jon", "Smith", Double.valueOf("3000"), 40, "Developer", department1);
         Employee employee2 = new Employee(Long.getLong("2"), "James", "Bond", Double.valueOf("4000"), 33, "Manager", department2);
 
@@ -103,8 +103,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
-        Employee employee = new Employee(Long.getLong("1"), "Jon", "Smith", Double.valueOf("3000"), 40, "Developer", department);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
+        Employee employee = new Employee(Long.valueOf(1), "Jon", "Smith", Double.valueOf("3000"), 40, "Developer", department);
         given(employeeService.findById(anyLong())).willReturn(Optional.of(employee));
         given(employeeService.create(any(Employee.class))).willReturn(employee);
         mockMvc.perform(put("/employee/{id}", "1")
@@ -117,7 +117,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void testUpdateNotFound() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         Employee employee = new Employee(Long.getLong("1"), "Jon", "Smith", Double.valueOf("3000"), 40, "Developer", department);
         given(employeeService.findById(anyLong())).willReturn(Optional.empty());
         mockMvc.perform(put("/employee/{id}", "1").contentType(MediaType.APPLICATION_JSON)
@@ -128,7 +128,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        Department department = new Department(Long.getLong("1"), "dept", "dept mock MVC test", "London", null);
+        Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         Employee employee = new Employee(Long.getLong("1"), "Jon", "Smith", Double.valueOf("3000"), 40, "Developer", department);
         given(employeeService.findById(anyLong())).willReturn(Optional.of(employee));
         mockMvc.perform(delete("/employee/{id}", "1"))
