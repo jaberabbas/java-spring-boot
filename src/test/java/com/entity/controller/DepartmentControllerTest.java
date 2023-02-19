@@ -96,7 +96,8 @@ public class DepartmentControllerTest {
         Department department = new Department(Long.valueOf(1), "dept", "dept mock MVC test", "London", null);
         given(departmentService.findById(anyLong())).willReturn(Optional.of(department));
         given(departmentService.create(any(Department.class))).willReturn(department);
-        mockMvc.perform(put("/department/{id}", "1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(department))).andExpect(status().isNoContent());
+        mockMvc.perform(put("/department/{id}", "1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(department)))
+                .andExpect(status().isNoContent());
 
         verify(departmentService).findById(anyLong());
         verify(departmentService).create(any(Department.class));
