@@ -1,7 +1,6 @@
 package com.task.service;
 
 import com.task.model.Department;
-import com.task.model.Employee;
 import com.task.util.WebClientConnector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
