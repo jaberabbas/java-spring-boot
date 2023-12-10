@@ -13,9 +13,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>entity-ap01</name>
 	<description>Demo project for Spring Boot and JPA</description>
-	<properties>
-		<java.version>19</java.version>
-	</properties>
+<!--	<properties>
+		<java.version>11</java.version>
+	</properties>-->
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -37,6 +37,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+			<version>1.18.30</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
