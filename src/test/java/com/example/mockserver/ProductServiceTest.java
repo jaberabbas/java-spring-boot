@@ -36,34 +36,34 @@ public class ProductServiceTest {
     @Test
     public void testGetProduct() {
 
-            // Define expectation: when GET /api/products/1 is called, return JSON response
-            client.when(
-                    request()
-                            .withMethod("GET")
-                            .withPath("/api/products/1")
-            ).respond(
-                    response()
-                            .withStatusCode(200)
-                            .withHeader("Content-Type", "application/json")
-                            .withBody("{ \"id\": 1, \"name\": \"Product A\", \"price\": 100.0, \"bestSeller\": true }")
-            );
+        // Define expectation: when GET /api/products/1 is called, return JSON response
+        client.when(
+                request()
+                        .withMethod("GET")
+                        .withPath("/api/products/1")
+        ).respond(
+                response()
+                        .withStatusCode(200)
+                        .withHeader("Content-Type", "application/json")
+                        .withBody("{ \"id\": 1, \"name\": \"Product A\", \"price\": 100.0, \"bestSeller\": true }")
+        );
 
-            // Create RestTemplate and add JSON converter
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.setMessageConverters(
-                    Collections.singletonList(new MappingJackson2HttpMessageConverter())
-            );
+        // Create RestTemplate and add JSON converter
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setMessageConverters(
+                Collections.singletonList(new MappingJackson2HttpMessageConverter())
+        );
 
-            // Simulate call to the mocked API
-            String url = "http://localhost:1080/api/products/1";
-            Product product = restTemplate.getForObject(url, Product.class);
+        // Simulate call to the mocked API
+        String url = "http://localhost:1080/api/products/1";
+        Product product = restTemplate.getForObject(url, Product.class);
 
-            // Validate the response
-            if(product != null) {
-                assertEquals(1, product.getId());
-                assertEquals("Product A", product.getName());
-                assertEquals(100.0, product.getPrice());
-                assertTrue(product.isBestSeller());
-            }
+        // Validate the response
+        if (product != null) {
+            assertEquals(1, product.getId());
+            assertEquals("Product A", product.getName());
+            assertEquals(100.0, product.getPrice());
+            assertTrue(product.isBestSeller());
+        }
     }
 }
