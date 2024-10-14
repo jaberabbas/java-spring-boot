@@ -1,6 +1,7 @@
 // src/main/java/com/example/demo/controller/UserController.java
 package com.example.demo.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.User;
@@ -21,14 +22,14 @@ public class UserController {
     }
 
     @PostMapping("/to-dto")
-    public ResponseEntity<?> convertToDto(@RequestBody User user) {
+    public ResponseEntity<?> convertToDto(@RequestBody @Valid  User user) {
         UserDto userDto = userService.convertToDto(user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(userDto.id()).toUri();
         return ResponseEntity.created(location).body(userDto);
     }
 
     @PostMapping("/to-entity")
-    public ResponseEntity<?> convertToEntity(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> convertToEntity(@RequestBody @Valid UserDto userDto) {
         User user =  userService.convertToEntity(userDto);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.id()).toUri();
         return ResponseEntity.created(location).body(user);
