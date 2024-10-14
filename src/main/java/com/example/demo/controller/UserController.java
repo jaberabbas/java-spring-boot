@@ -16,12 +16,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/toDto")
+    @PostMapping("/to-dto")
     public UserDto convertToDto(@RequestBody User user) {
         return userService.convertToDto(user);
     }
 
-    @PostMapping("/toEntity")
+    @PostMapping("/to-entity")
     public User convertToEntity(@RequestBody UserDto userDto) {
         return userService.convertToEntity(userDto);
     }
