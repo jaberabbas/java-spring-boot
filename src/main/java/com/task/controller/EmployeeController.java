@@ -20,37 +20,32 @@ import jakarta.validation.Valid;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    @Autowired
-    private EmployeeService employeeService;
-
+    private final EmployeeService employeeService;
+    public EmployeeController(EmployeeService employeeService){
+        this.employeeService = employeeService;
+    }
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody @Valid Employee employee) {
-        ResponseEntity responseEntity =  employeeService.create(employee);
-        return  responseEntity;
+        return employeeService.create(employee);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") long id) {
-        ResponseEntity<?> responseEntity = employeeService.getById(id);
-        return responseEntity;
+        return employeeService.getById(id);
     }
 
     @GetMapping()
     public ResponseEntity<?> getAll() {
-        ResponseEntity<?> responseEntity = employeeService.getAll();
-        return responseEntity;
+        return employeeService.getAll();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody @Valid Employee employee) {
-        ResponseEntity<?> responseEntity = employeeService.update(id, employee);
-        return responseEntity;
+        return employeeService.update(id, employee);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
-        ResponseEntity responseEntity = employeeService.delete(id);
-        return responseEntity;
+        return employeeService.delete(id);
     }
 }

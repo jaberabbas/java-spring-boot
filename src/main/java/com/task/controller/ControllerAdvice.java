@@ -29,7 +29,7 @@ public class ControllerAdvice {
         });
 
         StringBuilder sbErros = new StringBuilder();
-        errors.forEach((fieldName, errorMessage) -> sbErros.append(fieldName + " : " + errorMessage));
+        errors.forEach((fieldName, errorMessage) -> sbErros.append(fieldName).append(" : ").append(errorMessage));
         ErrorMessage message = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), "", sbErros.toString());
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }

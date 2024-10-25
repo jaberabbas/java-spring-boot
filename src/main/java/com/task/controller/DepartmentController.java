@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 public class DepartmentController {
 
 
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
@@ -22,32 +22,27 @@ public class DepartmentController {
 
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody @Valid Department department) {
-        ResponseEntity<?> responseEntity = departmentService.create(department);
-        return responseEntity;
+        return departmentService.create(department);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") long id) {
-        ResponseEntity<?> responseEntity = departmentService.getById(id);
-        return  responseEntity;
+        return departmentService.getById(id);
     }
 
     @GetMapping()
     public ResponseEntity<?> getAll() {
-        ResponseEntity<?> responseEntity = departmentService.getAll();
-        return responseEntity;
+        return departmentService.getAll();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody @Valid Department department) {
-        ResponseEntity<?> responseEntity = departmentService.update(id, department);
-        return responseEntity;
+        return departmentService.update(id, department);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
-        ResponseEntity responseEntity = departmentService.delete(id);
-        return responseEntity;
+        return departmentService.delete(id);
     }
 
 }
