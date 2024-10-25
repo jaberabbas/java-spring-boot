@@ -27,7 +27,7 @@ public class ControllerAdvice {
             errors.put(fieldName, errorMessage);
         });
         StringBuilder sbKeyValueErrors = new StringBuilder();
-        errors.forEach((fieldName, errorMessage)->sbKeyValueErrors.append(fieldName + " " + errorMessage));
+        errors.forEach((fieldName, errorMessage)-> sbKeyValueErrors.append(fieldName).append(" : ").append(errorMessage));
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), "", sbKeyValueErrors.toString());
         return ResponseEntity.badRequest().body(errorMessage);
     }

@@ -19,7 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/department")
 public class DepartmentController {
 
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
     public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
@@ -35,7 +35,7 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") long id) {
         Optional<Department> optionalDepartment = departmentService.findById(id);
-        if (!optionalDepartment.isPresent()) {
+        if (optionalDepartment.isEmpty()) {
             return ResponseEntity.unprocessableEntity().build();
         } else {
             return ResponseEntity.ok().body(optionalDepartment.get());
@@ -51,7 +51,7 @@ public class DepartmentController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody Department department) {
         Optional<Department> optionalDepartment = departmentService.findById(id);
-        if (!optionalDepartment.isPresent()) {
+        if (optionalDepartment.isEmpty()) {
             return ResponseEntity.unprocessableEntity().build();
         }
         department.setId(optionalDepartment.get().getId());
@@ -62,7 +62,7 @@ public class DepartmentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         Optional<Department> departmentOptional = departmentService.findById(id);
-        if (!departmentOptional.isPresent()) {
+        if (departmentOptional.isEmpty()) {
             return ResponseEntity.unprocessableEntity().build();
         }
         departmentService.delete(departmentOptional.get());

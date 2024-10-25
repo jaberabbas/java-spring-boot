@@ -26,7 +26,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -42,7 +42,7 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") long id) {
         Optional<Employee> optionalEmployee = employeeService.findById(id);
-        if (!optionalEmployee.isPresent()) {
+        if (optionalEmployee.isEmpty()) {
             return ResponseEntity.unprocessableEntity().build();
         } else {
             return ResponseEntity.ok().body(optionalEmployee.get());
@@ -58,7 +58,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody Employee employee) {
         Optional<Employee> optionalEmployee = employeeService.findById(id);
-        if (!optionalEmployee.isPresent()) {
+        if (optionalEmployee.isEmpty()) {
             return ResponseEntity.unprocessableEntity().build();
         }
         employee.setId(optionalEmployee.get().getId());
@@ -69,7 +69,7 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         Optional<Employee> optionalEmployee = employeeService.findById(id);
-        if (!optionalEmployee.isPresent()) {
+        if (optionalEmployee.isEmpty()) {
             return ResponseEntity.unprocessableEntity().build();
         }
         employeeService.delete(optionalEmployee.get());
