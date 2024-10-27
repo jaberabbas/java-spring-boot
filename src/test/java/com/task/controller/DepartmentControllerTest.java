@@ -35,7 +35,7 @@ public class DepartmentControllerTest {
 
     @Test
     public void testCreate() throws JsonProcessingException, Exception {
-        Department department = new Department(Long.valueOf(1), "dept", "Liege", "department controller test unit");
+        Department department = new Department(1L, "dept", "Liege", "department controller test unit");
         URI location = URI.create("http://localhost/department");
         ResponseEntity responseEntity = ResponseEntity.created(location).body(department);
         given(departmentService.create(ArgumentMatchers.any(Department.class))).willReturn(responseEntity);
@@ -47,7 +47,7 @@ public class DepartmentControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        Department department = new Department(Long.valueOf(1), "dept", "department controller test unit", "Liege");
+        Department department = new Department(1L, "dept", "department controller test unit", "Liege");
         ResponseEntity responseEntity = ResponseEntity.ok().body(department);
         given(departmentService.getById(anyLong())).willReturn(responseEntity);
         mockMvc.perform(get("/department/{id}", "1"))

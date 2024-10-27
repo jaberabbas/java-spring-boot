@@ -34,8 +34,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void testCreate() throws JsonProcessingException, Exception {
-        Department department = new Department(Long.valueOf(1), "dept", "Liege", "department controller test unit");
-        Employee employee = new Employee(Long.valueOf(1), "James", "Bond", Double.valueOf("10000"), 55, "SalesMan", department);
+        Department department = new Department(1L, "dept", "Liege", "department controller test unit");
+        Employee employee = new Employee(1L, "James", "Bond", Double.valueOf("10000"), 55, "SalesMan", department);
         URI location = URI.create("http://localhost/employee");
         ResponseEntity responseEntity = ResponseEntity.created(location).body(employee);
         given(employeeService.create(ArgumentMatchers.any(Employee.class))).willReturn(responseEntity);
@@ -47,8 +47,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        Department department = new Department(Long.valueOf(1), "dept", "department controller test unit", "Liege");
-        Employee employee = new Employee(Long.valueOf(1), "James", "Bond", Double.valueOf("10000"), 55, "SalesMan", department);
+        Department department = new Department(1L, "dept", "department controller test unit", "Liege");
+        Employee employee = new Employee(1L, "James", "Bond", Double.valueOf("10000"), 55, "SalesMan", department);
         ResponseEntity responseEntity = ResponseEntity.ok().body(employee);
         given(employeeService.getById(anyLong())).willReturn(responseEntity);
         mockMvc.perform(get("/employee/{id}", "1"))
@@ -67,10 +67,10 @@ public class EmployeeControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        Department department1 = new Department(Long.valueOf(1), "dept1", "department controller test unit", "Liege");
-        Department department2 = new Department(Long.valueOf(2), "dept2", "department controller test unit", "Namur");
-        Employee employee1 = new Employee(Long.valueOf(1), "James", "Bond", Double.valueOf("10000"), 55, "SalesMan", department1);
-        Employee employee2 = new Employee(Long.valueOf(2), "Mister", "Beens", Double.valueOf("5000"), 60, "Comedian", department2);
+        Department department1 = new Department(1L, "dept1", "department controller test unit", "Liege");
+        Department department2 = new Department(2L, "dept2", "department controller test unit", "Namur");
+        Employee employee1 = new Employee(1L, "James", "Bond", Double.valueOf("10000"), 55, "SalesMan", department1);
+        Employee employee2 = new Employee(2L, "Mister", "Beens", Double.valueOf("5000"), 60, "Comedian", department2);
 
         List<Employee> employeeList = new ArrayList<>();
         employeeList.add(employee1);
@@ -93,8 +93,8 @@ public class EmployeeControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        Department department = new Department(Long.valueOf(1), "dept", "department controller test unit", "Liege");
-        Employee employee = new Employee(Long.valueOf(1), "James", "Bond", Double.valueOf("10000"), 55, "SalesMan", department);
+        Department department = new Department(1L, "dept", "department controller test unit", "Liege");
+        Employee employee = new Employee(1L, "James", "Bond", Double.valueOf("10000"), 55, "SalesMan", department);
         ResponseEntity responseEntity = ResponseEntity.noContent().build();
         given(employeeService.update(anyLong(), ArgumentMatchers.any(Employee.class))).willReturn(responseEntity);
         mockMvc.perform(put("/employee/{id}", "1").contentType(MediaType.APPLICATION_JSON).content(asJsonString(employee)))
@@ -111,8 +111,6 @@ public class EmployeeControllerTest {
     private String asJsonString(final Object obj) throws JsonProcessingException {
 
         final ObjectMapper mapper = new ObjectMapper();
-        final String jsonContent = mapper.writeValueAsString(obj);
-        return jsonContent;
-
+        return mapper.writeValueAsString(obj);
     }
 }
