@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @OpenAPIDefinition(info = @Info(
         title = "Employee | Department Java Spring Boot Lab",
         description = "A test project to get used to Spring Boot",
-        version = "1.0.0"), tags = {@Tag(name = "Employee Api contoller", description = "This is the global CRUD controller for the Employee model")})
+        version = "1.0.0"), tags = {@Tag(name = "Employee Api controller", description = "This is the global CRUD controller for the Employee model")})
 public class EntityApiApplication {
 
     public static void main(String[] args) {

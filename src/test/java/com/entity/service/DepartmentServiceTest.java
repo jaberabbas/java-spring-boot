@@ -36,7 +36,7 @@ public class DepartmentServiceTest {
 
     @Test
     public void testCreate() {
-        Department department = new Department(Long.valueOf(1), "dept", "department service unit test", "Paris", null);
+        Department department = new Department(1L, "dept", "department service unit test", "Paris", null);
         when(departmentRepository.save(department)).thenReturn(department);
         Department savedDept = departmentService.create(department);
         assertThat(savedDept.getName()).isEqualTo("dept");
@@ -45,9 +45,9 @@ public class DepartmentServiceTest {
 
     @Test
     public void testGet() {
-        Department department = new Department(Long.valueOf(1), "dept", "department service unit test", "Paris", null);
+        Department department = new Department(1L, "dept", "department service unit test", "Paris", null);
         when(departmentRepository.findById(anyLong())).thenReturn(Optional.of(department));
-        Optional<Department> optionalDepartment = departmentService.findById(Long.valueOf(1));
+        Optional<Department> optionalDepartment = departmentService.findById(1L);
         if (optionalDepartment.isPresent()) {
             Department department1 = optionalDepartment.get();
             assertThat(department1.getName()).isEqualTo(department.getName());
@@ -57,8 +57,8 @@ public class DepartmentServiceTest {
 
     @Test
     public void testGetAll() {
-        Department department1 = new Department(Long.valueOf(1), "dept1", "department service unit test", "Paris", null);
-        Department department2 = new Department(Long.valueOf(2), "dept2", "department service unit test", "London", null);
+        Department department1 = new Department(1L, "dept1", "department service unit test", "Paris", null);
+        Department department2 = new Department(2L, "dept2", "department service unit test", "London", null);
         List<Department> departmentList = new ArrayList<>();
         departmentList.add(department1);
         departmentList.add(department2);
@@ -77,7 +77,7 @@ public class DepartmentServiceTest {
 
     @Test
     public void testDelete() {
-        Department department = new Department(Long.valueOf(1), "dept", "department service unit test", "Paris", null);
+        Department department = new Department(1L, "dept", "department service unit test", "Paris", null);
         departmentService.delete(department);
     }
 }

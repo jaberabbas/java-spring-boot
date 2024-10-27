@@ -33,8 +33,8 @@ public class EmployeeServiceTest {
 
     @Test
     public void testCreate() {
-        Department department = new Department(Long.valueOf(1), "dept", "department service unit test", "Paris", null);
-        Employee employee = new Employee(Long.valueOf(1), "Bart", "Vanden", Double.valueOf(2000), 35, "Architect", department);
+        Department department = new Department(1L, "dept", "department service unit test", "Paris", null);
+        Employee employee = new Employee(1L, "Bart", "Vanden", 2000.0, 35, "Architect", department);
         when(employeeRepository.save(employee)).thenReturn(employee);
         Employee savedEmpl = employeeService.create(employee);
         assertThat(savedEmpl.getFirstName()).isEqualTo("Bart");
@@ -45,10 +45,10 @@ public class EmployeeServiceTest {
 
     @Test
     public void testGet() {
-        Department department = new Department(Long.valueOf(1), "dept", "department service unit test", "Paris", null);
-        Employee employee = new Employee(Long.valueOf(1), "Bart", "Vanden", Double.valueOf(2000), 35, "Architect", department);
+        Department department = new Department(1L, "dept", "department service unit test", "Paris", null);
+        Employee employee = new Employee(1L, "Bart", "Vanden", 2000.0, 35, "Architect", department);
         when(employeeRepository.findById(anyLong())).thenReturn(Optional.of(employee));
-        Optional<Employee> optionalEmpl = employeeService.findById(Long.valueOf(1));
+        Optional<Employee> optionalEmpl = employeeService.findById(1L);
         if (optionalEmpl.isPresent()) {
             Employee employee1 = optionalEmpl.get();
             assertThat(employee1.getFirstName()).isEqualTo(employee.getFirstName());
@@ -59,10 +59,10 @@ public class EmployeeServiceTest {
 
     @Test
     public void testGetAll() {
-        Department department1 = new Department(Long.valueOf(1), "dept1", "department service unit test", "Paris", null);
-        Department department2 = new Department(Long.valueOf(2), "dept2", "department service unit test", "London", null);
-        Employee employee1 = new Employee(Long.valueOf(1), "Bart", "Vanden", Double.valueOf(2000), 35, "Architect", department1);
-        Employee employee2 = new Employee(Long.valueOf(2), "Bart", "Vanden", Double.valueOf(2000), 35, "Architect", department2);
+        Department department1 = new Department(1L, "dept1", "department service unit test", "Paris", null);
+        Department department2 = new Department(2L, "dept2", "department service unit test", "London", null);
+        Employee employee1 = new Employee(1L, "Bart", "Vanden", Double.valueOf(2000), 35, "Architect", department1);
+        Employee employee2 = new Employee(2L, "Bart", "Vanden", Double.valueOf(2000), 35, "Architect", department2);
 
 
         List<Employee> employeeList = new ArrayList<>();

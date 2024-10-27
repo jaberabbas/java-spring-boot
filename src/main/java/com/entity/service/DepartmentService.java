@@ -16,23 +16,22 @@ public class DepartmentService {
 
     private static final Logger log = LoggerFactory.getLogger(DepartmentService.class);
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
-
-    public Department create(Department department)  {
-           Department savedDepartment =  departmentRepository.save(department);
-            return savedDepartment;
+    public DepartmentService(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
     }
 
-    public Optional<Department> findById(long id){
-        Optional<Department> optionalDepartment = departmentRepository.findById(id);
-        return optionalDepartment;
+    public Department create(Department department) {
+        return departmentRepository.save(department);
+    }
+
+    public Optional<Department> findById(long id) {
+        return departmentRepository.findById(id);
     }
 
     public Page<Department> findAll(Pageable pageable) {
-        Page<Department> departmentPage = departmentRepository.findAll(pageable);
-        return departmentPage;
+        return departmentRepository.findAll(pageable);
     }
 
     public void delete(Department department) {

@@ -1,6 +1,7 @@
 package com.entity.service;
 
 import java.util.Optional;
+
 import com.entity.dao.DepartmentRepository;
 import com.entity.model.Employee;
 import com.entity.dao.EmployeeRepository;
@@ -15,24 +16,26 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class EmployeeService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    @Autowired
-    DepartmentRepository departmentRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     public Employee create(Employee employee) {
         employeeRepository.save(employee);
         return employee;
     }
+
     public Optional<Employee> findById(long id) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        return optionalEmployee;
+        return employeeRepository.findById(id);
     }
+
     public Page<Employee> findAll(Pageable pageable) {
-        Page<Employee> employeePage = employeeRepository.findAll(pageable);
-        return employeePage;
+        return employeeRepository.findAll(pageable);
     }
+
     public void delete(Employee employee) {
         employeeRepository.delete(employee);
     }

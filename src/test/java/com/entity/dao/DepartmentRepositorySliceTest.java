@@ -17,9 +17,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 //@Rollback(value = false)
 public class DepartmentRepositorySliceTest {
 
- /*   @Autowired
-    private TestEntityManager testEntityManager;*/
-
     @Autowired
     private DepartmentRepository departmentRepository;
 
@@ -60,7 +57,6 @@ public class DepartmentRepositorySliceTest {
         departmentRepository.save(department2);
         departmentRepository.save(department3);
         List<Department> departmentList = departmentRepository.findAll();
-        assertThat(departmentList.size() != 0);
         departmentList.forEach(department -> {
                     assertThat(department.getName().length()).isGreaterThan(0);
                     assertThat(department.getLocation().length()).isGreaterThan(0);
