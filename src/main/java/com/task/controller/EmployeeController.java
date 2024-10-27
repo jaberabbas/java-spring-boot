@@ -1,5 +1,7 @@
 package com.task.controller;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +22,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/employee")
 public class EmployeeController {
 
+    private static final String EMPLOYEE_SERVICE = "employeeService";
     private final EmployeeService employeeService;
     public EmployeeController(EmployeeService employeeService){
         this.employeeService = employeeService;
@@ -29,21 +32,29 @@ public class EmployeeController {
         return employeeService.create(employee);
     }
 
+    @Retry(name = EMPLOYEE_SERVICE)
+    @CircuitBreaker(name = EMPLOYEE_SERVICE)
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") long id) {
         return employeeService.getById(id);
     }
 
+    @Retry(name = EMPLOYEE_SERVICE)
+    @CircuitBreaker(name = EMPLOYEE_SERVICE)
     @GetMapping()
     public ResponseEntity<?> getAll() {
         return employeeService.getAll();
     }
 
+    @Retry(name = EMPLOYEE_SERVICE)
+    @CircuitBreaker(name = EMPLOYEE_SERVICE)
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody @Valid Employee employee) {
         return employeeService.update(id, employee);
     }
 
+    @Retry(name = EMPLOYEE_SERVICE)
+    @CircuitBreaker(name = EMPLOYEE_SERVICE)
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         return employeeService.delete(id);
