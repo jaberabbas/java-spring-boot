@@ -16,7 +16,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConnector {
 
     private final WebClient webClient;
-    private static final String BASE_URL = "http://localhost:8080";
+    //private static final String BASE_URL = "http://localhost:8080";
+    private static final String BASE_URL  = "https://entity-api-fsebhjf8cfgqehc9.germanywestcentral-01.azurewebsites.net/";
 
     public WebClientConnector() {
         this.webClient = WebClient.builder()
