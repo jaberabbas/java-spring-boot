@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.validation.FieldError;
-
+import org.hibernate.exception.ConstraintViolationException;
 
 @org.springframework.web.bind.annotation.ControllerAdvice
 public class ControllerAdvice {
@@ -39,6 +39,12 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler
+    public ResponseEntity<ErrorMessage> handleConstraintViolationException(ConstraintViolationException e) {
+        ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.getErrorCode()), "ConstraintViolationException: " + e.getMessage());
+        return ResponseEntity.badRequest().body(errorMessage);
+    }
+
+    @ExceptionHandler
     public ResponseEntity<ErrorMessage> handlePersistentObjectException(PersistentObjectException e) {
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.hashCode()), e.getMessage());
         return ResponseEntity.badRequest().body(errorMessage);
@@ -49,5 +55,6 @@ public class ControllerAdvice {
         ErrorMessage errorMessage = new ErrorMessage(ErrorCodes.FUNC001.getCode(), ErrorCodes.FUNC001.getDesc(), String.valueOf(e.hashCode()), e.getMessage());
         return ResponseEntity.badRequest().body(errorMessage);
     }
+
 }
 
