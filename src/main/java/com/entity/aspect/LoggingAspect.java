@@ -48,7 +48,7 @@ public class LoggingAspect {
      */
     @AfterThrowing(pointcut = "applicationPackagePointcut() && springBeanPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        log.error("Exception in {}.{}() with cause: ", joinPoint.getSignature().getDeclaringTypeName(),
+        log.error("Exception in {}.{}() with cause: {}", joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(), e.getCause() != null ? e.getCause() : "NULL");
     }
 
@@ -95,7 +95,7 @@ public class LoggingAspect {
 
         //Log method execution time
         if(stopWatch.getTotalTimeMillis() >= 10)
-            log.error("Execution time of " + className + "." + methodName + " :: " + stopWatch.getTotalTimeMillis() + " ms");
+            log.error("Execution time (PERF LOG) of {}.{} :: {} ms", className, methodName, stopWatch.getTotalTimeMillis());
 
         return result;
     }
