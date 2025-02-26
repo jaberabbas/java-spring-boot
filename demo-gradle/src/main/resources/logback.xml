@@ -1,204 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="eai.nbr" value="3540078" />
-    <property name="eai.name" value="SSDC" />
-    <springProperty scope="context" name="applicationName" source="spring.application.name"/>
-    <appender name="CLOUD_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <nestedField>
-                    <fieldName>log</fieldName>
-                    <providers>
-                        <logLevel>
-                            <fieldName>level</fieldName>
-                        </logLevel>
-                        <loggerName>
-                            <fieldName>logger</fieldName>
-                        </loggerName>
-                    </providers>
-                </nestedField>
-                <message/>
-                <pattern>
-                    <pattern>
-                        {
-                        "process": {
-                        "thread":
-                        {
-                        "name": "%thread"
-                        }
-                        },
-                        "process": {
-                        "thread":
-                        {
-                        "name": "%thread"
-                        }
-                        },
-                        "transaction": {
-                        "id": "%mdc{transactionId}"
-                        },
-                        "trace": {
-                        "id": "%mdc{trackingNumber}",
-                        "trackingItemUniqueId": "%mdc{trackingItemUniqueId}"
-                        },
-                        "msg": {
-                        "error": "%mdc{errorMessage}"
-                        },
-                        "error": {
-                        "Stack_hash": "%mdc{errorStackhash}"
-                        },
-                        "msg": {
-                        "common": {
-                        "shipment":
-                        {
-                        "id": "%mdc{CommonShipmentId}"
-                        }
-                        }
-                        },
-                        "msg": {
-                        "common": {
-                        "external": {
-                        "system":
-                        {
-                        "id": "%mdc{commonExternalSystemId}"
-                        }
-                        }
-                        }
-                        },
-                        "msg": {
-                        "common": {
-                        "shipment":
-                        {
-                        "status": "%mdc{commonShipmentsStatus}"
-                        }
-                        }
-                        },
-                        "eai": "3540078"
-                        }
-                    </pattern>
-                    <omitEmptyFields>true</omitEmptyFields>
-                </pattern>
-                <timestamp>
-                    <fieldName>timestamp</fieldName>
-                    <!-- Set pattern to "2018-09-21T18:10:35.390Z" -->
-                    <pattern>yyyy-MM-dd'T'HH:mm:ss.SSS'Z'</pattern>
-                    <timeZone>GMT</timeZone>
-                </timestamp>
-                <mdc/>
-            </providers>
-        </encoder>
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <!-- Add a custom exception converter to streamline stack traces -->
-            <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
-                <maxDepthPerThrowable>20</maxDepthPerThrowable>
-                <maxLength>1024</maxLength>
-                <shortenedClassNameLength>20</shortenedClassNameLength>
-                <inlineHash>true</inlineHash> <!-- Creates a unique hash to use in searches -->
-            </throwableConverter>
-        </encoder>
-    </appender>
 
+    <!-- Define Log Level and Output Format -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <nestedField>
-                    <fieldName>log</fieldName>
-                    <providers>
-                        <logLevel>
-                            <fieldName>level</fieldName>
-                        </logLevel>
-                        <loggerName>
-                            <fieldName>logger</fieldName>
-                        </loggerName>
-                    </providers>
-                </nestedField>
-                <message/>
-                <pattern>
-                    <pattern>
-                        {
-                        "process": {
-                        "thread":
-                        {
-                        "name": "%thread"
-                        }
-                        },
-                        "process": {
-                        "thread":
-                        {
-                        "name": "%thread"
-                        }
-                        },
-                        "transaction": {
-                        "id": "%mdc{transactionId}"
-                        },
-                        "trace": {
-                        "id": "%mdc{trackingNumber}",
-                        "trackingItemUniqueId": "%mdc{trackingItemUniqueId}"
-                        },
-                        "msg": {
-                        "error": "%mdc{errorMessage}"
-                        },
-                        "error": {
-                        "Stack_hash": "%mdc{errorStackhash}"
-                        },
-                        "msg": {
-                        "common": {
-                        "shipment":
-                        {
-                        "id": "%mdc{CommonShipmentId}"
-                        }
-                        }
-                        },
-                        "msg": {
-                        "common": {
-                        "external": {
-                        "system":
-                        {
-                        "id": "%mdc{commonExternalSystemId}"
-                        }
-                        }
-                        }
-                        },
-                        "msg": {
-                        "common": {
-                        "shipment":
-                        {
-                        "status": "%mdc{commonShipmentsStatus}"
-                        }
-                        }
-                        },
-                        "eai": "3540078"
-                        }
-                    </pattern>
-                    <omitEmptyFields>true</omitEmptyFields>
-                </pattern>
-                <timestamp>
-                    <fieldName>timestamp</fieldName>
-                    <!-- Set pattern to "2018-09-21T18:10:35.390Z" -->
-                    <pattern>yyyy-MM-dd'T'HH:mm:ss.SSS'Z'</pattern>
-                    <timeZone>GMT</timeZone>
-                </timestamp>
-                <mdc/>
-            </providers>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-
     </appender>
 
-    <springProfile name="cloud">
-        <root level="info">
-            <appender-ref ref="CLOUD_CONSOLE" />
-        </root>
-    </springProfile> 
-    <springProfile name="cloud">
-        <logger name="com.fedex" level="debug"/>
-    </springProfile>
+    <!-- File Appender (Optional) -->
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/app.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
 
-    <springProfile name="!cloud">
-        <root level="debug">
-            <appender-ref ref="CONSOLE" />
-        </root>
-    </springProfile>
-    <springProfile name="!cloud">
-        <logger name="com.fedex" level="debug"/>
-    </springProfile>
+    <!-- Set Root Logging Level -->
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+    <!-- Custom Logging Levels for Specific Packages -->
+    <logger name="com.example" level="debug"/>
 </configuration>
- 

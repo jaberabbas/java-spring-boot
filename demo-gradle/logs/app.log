@@ -1,0 +1,18 @@
+2025-02-26 20:55:37 [main] INFO  com.example.DemoGradleApplication - Starting DemoGradleApplication using Java 17.0.12 with PID 26468 (C:\Users\jaber.abbas\workspace\java\spring-boot\demo-gradle\demo-gradle\build\classes\java\main started by jaber.abbas in C:\Users\jaber.abbas\workspace\java\spring-boot\demo-gradle\demo-gradle)
+2025-02-26 20:55:37 [main] DEBUG com.example.DemoGradleApplication - Running with Spring Boot v3.4.3, Spring v6.2.3
+2025-02-26 20:55:37 [main] INFO  com.example.DemoGradleApplication - No active profile set, falling back to 1 default profile: "default"
+2025-02-26 20:55:40 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-02-26 20:55:40 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-02-26 20:55:40 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-02-26 20:55:40 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-02-26 20:55:40 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-02-26 20:55:40 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2203 ms
+2025-02-26 20:55:41 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-02-26 20:55:41 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-02-26 20:55:41 [main] INFO  com.example.DemoGradleApplication - Started DemoGradleApplication in 4.186 seconds (process running for 5.455)
+2025-02-26 20:56:14 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-02-26 20:56:14 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-02-26 20:56:14 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-02-26 20:56:15 [http-nio-8080-exec-1] INFO  com.example.LoggingController - INFO level log message
+2025-02-26 20:56:15 [http-nio-8080-exec-1] DEBUG com.example.LoggingController - DEBUG level log message
+2025-02-26 20:56:15 [http-nio-8080-exec-1] ERROR com.example.LoggingController - ERROR level log message
