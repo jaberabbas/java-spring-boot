@@ -10,6 +10,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
+import org.springframework.scheduling.annotation.Async;
 
 import java.util.Arrays;
 
@@ -47,8 +48,8 @@ public class LoggingAspect {
      */
     @AfterThrowing(pointcut = "applicationPackagePointcut() && springBeanPointcut()", throwing = "e")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        log.error("Exception in {}.{}() with cause: {}", joinPoint.getSignature().getDeclaringTypeName(),
-                joinPoint.getSignature().getName(), e.getCause() != null ? e.getCause() : "NULL");
+       // log.error("Exception in {}.{}() with cause: {}", joinPoint.getSignature().getDeclaringTypeName(),
+       //         joinPoint.getSignature().getName(), e.getCause() != null ? e.getCause() : "NULL");
     }
 
     /**
@@ -60,23 +61,24 @@ public class LoggingAspect {
      */
     @Around("applicationPackagePointcut()")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
-        log.debug("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
+       // log.debug("Enter: {}.{}() with argument[s] = {}", joinPoint.getSignature().getDeclaringTypeName(),
+       //         joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
 
         try {
             Object result = joinPoint.proceed();
-            log.debug("Exit: {}.{}() with result = {}", joinPoint.getSignature().getDeclaringTypeName(),
-                    joinPoint.getSignature().getName(), result);
+            //log.debug("Exit: {}.{}() with result = {}", joinPoint.getSignature().getDeclaringTypeName(),
+                  //  joinPoint.getSignature().getName(), result);
 
             return result;
         } catch (IllegalArgumentException e) {
-            log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
-                    joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
+           // log.error("Illegal argument: {} in {}.{}()", Arrays.toString(joinPoint.getArgs()),
+              //      joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
             throw e;
         }
     }
 
     //AOP expression for which methods shall be intercepted
+    //@Async("loggerExecutor")  // Use the custom thread pool
     @Around("execution(* com.task.service..*(..)))")
     public Object profileAllMethods(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint.getSignature();
@@ -93,8 +95,8 @@ public class LoggingAspect {
         stopWatch.stop();
 
         //Log method execution time (performance)
-        if(stopWatch.getTotalTimeMillis() >= 10)
-            log.error("Execution time of {}.{} :: {} ms", className, methodName, stopWatch.getTotalTimeMillis());
+       // if(stopWatch.getTotalTimeMillis() >= 1000)
+           // log.error("Execution time of {}.{} :: {} ms", className, methodName, stopWatch.getTotalTimeMillis());
 
         return result;
     }

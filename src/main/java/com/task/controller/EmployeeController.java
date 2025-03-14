@@ -59,4 +59,11 @@ public class EmployeeController {
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
         return employeeService.delete(id);
     }
+    @GetMapping("/p")
+    public String perfTestMethod(){
+        employeeService.perfTestMethod1();
+        employeeService.perfTestMethod2();
+        employeeService.perfTestMethod3();
+        return "ok";
+    }
 }

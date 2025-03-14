@@ -36,4 +36,28 @@ public class EmployeeService {
     public ResponseEntity<?> delete(long id) {
         return webClientConnector.delete("/employee/" + id);
     }
+    public String perfTestMethod1(){
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return "ok";
+    }
+    public String perfTestMethod2(){
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return "ok";
+    }
+    public String perfTestMethod3(){
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return "ok";
+    }
 }

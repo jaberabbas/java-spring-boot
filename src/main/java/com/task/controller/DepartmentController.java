@@ -1,6 +1,7 @@
 package com.task.controller;
 
 
+import com.task.service.AsyncLoggerService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,11 @@ public class DepartmentController {
 
     private final DepartmentService departmentService;
     private final static String DEPARTMENT_SERVICE = "departmentService";
-    public DepartmentController(DepartmentService departmentService) {
+    private final AsyncLoggerService asyncLoggerService;
+
+    public DepartmentController(DepartmentService departmentService, AsyncLoggerService asyncLoggerService) {
         this.departmentService = departmentService;
+        this.asyncLoggerService = asyncLoggerService;
     }
 
 
@@ -33,6 +37,7 @@ public class DepartmentController {
     @CircuitBreaker(name = DEPARTMENT_SERVICE)
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") long id) {
+        asyncLoggerService.logMessage("get method called with id: " + id);
         return departmentService.getById(id);
     }
 
