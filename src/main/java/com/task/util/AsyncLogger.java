@@ -11,18 +11,18 @@ public class AsyncLogger {
     private static final Logger logger = LoggerFactory.getLogger(AsyncLogger.class);
 
     @Async("loggerExecutor")
-    public void logError(String message, Throwable e) {
-        logger.error(message, e);
+    public void logError(String message, Object ... o) {
+        logger.error(message, o);
     }
 
     @Async("loggerExecutor")
-    public void logInfo(String message, Object o) {
-        logger.info("{} - {}", message, o.toString());
+    public void logInfo(String message, Object ... o) {
+        logger.info(message, o);
     }
 
     @Async("loggerExecutor")
-    public void logDebug(String message, Object o) {
-        logger.info("{} - {}", message, o.toString());
+    public void logDebug(String message, Object ... o) {
+        logger.debug(message, o);
     }
 }
 

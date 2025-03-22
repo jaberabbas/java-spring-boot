@@ -38,10 +38,13 @@ public class DepartmentController {
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable("id") long id) {
         Department dep = new Department(1L, "dep1", "it department", "Belgium");
-        asyncLogger.logInfo("get method called with id: " + id, dep);
+        //asyncLogger.logInfo("get method called with id: " + id, dep);
         Exception e =  new Exception("this is a testing exception from Department Controller");
-        asyncLogger.logError("this is error", e);
-        asyncLogger.logDebug("this is a debug", dep);
+        asyncLogger.logError("this is error msg: {}, cause: {}", e.getMessage(), e.getCause());
+
+
+        asyncLogger.logDebug("this is a debug id: {} and  department: {} )", dep.getId(), dep);
+        asyncLogger.logInfo("this is a info id: {}, name: {} and department: {} )", dep.getId(), dep.getName(), dep);
         return departmentService.getById(id);
     }
 
